@@ -4,8 +4,8 @@
       <v-card>
         <v-container fluid>
           <v-list two-line>
-            <template v-for="item in expressions">
-              <v-list-tile :key="item.expression">
+            <template v-for="(item, index) in expressions">
+              <v-list-tile :key="index">
                 <v-list-tile-content>
                   <v-text-field v-model="item.expression" box />
                 </v-list-tile-content>
