@@ -4,6 +4,7 @@ export class Calculator {
   errors: Array<any> = []
 
   constructor() {
+    MathJS.import([{ 'z': 5 }], { override: true })
     MathJS.import([{ '$': 5 }], { override: true })
   }
 
