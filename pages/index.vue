@@ -1,43 +1,35 @@
-<template>
-  <v-layout row wrap>
-    <v-flex xs12 sm6 md5>
-      <v-card>
-        <v-container fluid>
-          <v-list two-line>
-            <template v-for="(item, index) in expressions">
-              <v-list-tile :key="index">
-                <v-list-tile-content>
-                  <v-text-field v-model="item.expression" box />
-                </v-list-tile-content>
-                <v-list-tile-content class="align-end">
-                  <v-text-field v-text="calculate(item.expression)" />
-                </v-list-tile-content>
-              </v-list-tile>
-            </template>
-          </v-list>
-        </v-container>
-      </v-card>
-    </v-flex>
-  </v-layout>
+<template lang="pug">
+  v-layout.align-center.justify-center.row
+    v-flex.xs6
+      v-card.pa-3
+        v-container.grid-list-xs
+          v-layout.row.wrap(v-for="(item, index) in expressions" :key="index")
+            v-flex.xs10
+              v-text-field(v-model="item.expression" solo prefix="=" :error-messages="item.errors")
+            v-flex.xs2
+              v-sheet.align-center.justify-end.d-flex.pa-2(color="success lighten-2" height="48" elevation="2").
+                {{ item.result }}
+          v-btn(fab dark small color="indigo" @click="add")
+            v-icon(dark) add
 </template>
 
 <script>
 
-import { Calculator } from '~/calculator/calculator'
+import { Item } from '~/calculator/item'
 
 export default {
   data() {
     return {
       expressions:
       [
-        { expression: '2*3' },
-        { expression: '5+8' }
+        new Item('2*3'),
+        new Item('5+8')
       ]
     }
   },
   methods: {
-    calculate: function (expression) {
-      return new Calculator().calculate(expression)
+    add: function () {
+      this.expressions.push({ expression: '' })
     }
   }
 }
