@@ -7,10 +7,10 @@
             v-flex.xs10
               v-text-field(v-model="item.expression" solo prefix="=" :error-messages="item.errors")
             v-flex.xs2
-              v-sheet.align-center.justify-end.d-flex.pa-2(color="success lighten-2" height="48" elevation="2").
+              v-sheet.align-center.justify-end.d-flex.pa-2(color="grey lighten-3" height="48" elevation="2").
                 {{ item.result }}
-          v-btn(fab dark small color="indigo" @click="add")
-            v-icon(dark) add
+        v-btn(fab dark small bottom right absolute color="green" @click="addExpression")
+          v-icon(dark) add
 </template>
 
 <script>
@@ -28,8 +28,8 @@ export default {
     }
   },
   methods: {
-    add: function () {
-      this.expressions.push({ expression: '' })
+    addExpression: function () {
+      this.expressions.push(new Item(''))
     }
   }
 }
