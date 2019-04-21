@@ -25,6 +25,7 @@
       ]
     },
     "types": [
+      "@types/mathjs",
       "@types/node",
       "@nuxt/vue-app"
     ]
