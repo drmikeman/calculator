@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/mathjs": "~6.0.1",
+    "@types/mathjs": "~6.0.0",
     "cross-env": "^5.2.0",
     "mathjs": "~6.0.3",
     "nuxt": "^2.4.0",
