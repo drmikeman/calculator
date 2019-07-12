@@ -1261,10 +1261,10 @@
   resolved "https://registry.yarnpkg.com/@types/loglevel/-/loglevel-1.5.4.tgz#6e296bf20d9f6b0a3274cfb01a918f1d634e4c32"
   integrity sha512-8dx4ckP0vndJeN+iKZwdGiapLqFjVQ3JLOt92uqK0C63acs5NcPLbUOpfXCJkKVRjZLBQjw8NIGNBSsnatFnFQ==
 
-"@types/mathjs@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@types/mathjs/-/mathjs-5.0.1.tgz#b98e163ea396b4f27bec20ee25ffb8fe9e656af8"
-  integrity sha512-EFBuueI+BRed9bnUO6/9my55b4FH+VQIvqMm58h9JGbtaGCkqr3YSDhnmVbM1SJjF//8SURERSypzNwejOk7lA==
+"@types/mathjs@~6.0.1":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@types/mathjs/-/mathjs-6.0.0.tgz#5f00e276fbcd4d59d3bb54230b775383db4729a3"
+  integrity sha512-5lQUtV1ukuKGTbeFMb3R8Uan3cBcQ8/H6aZfybkcxCx8NmqSOprwU4bAI/RCU1Q+5fHTGU4Ru8FAZOfsqYL03A==
   dependencies:
     decimal.js "^10.0.0"
 
@@ -3379,7 +3379,12 @@ decamelize@^1.0.0, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decimal.js@10.1.1, decimal.js@^10.0.0:
+decimal.js@10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.2.0.tgz#39466113a9e036111d02f82489b5fd6b0b5ed231"
+  integrity sha512-vDPw+rDgn3bZe1+F/pyEwb1oMG2XTlRVgAa6B4KccTEpYgF8w6eQllVbQcfIJnZyvzFtFpxnpGtx8dd7DJp/Rw==
+
+decimal.js@^10.0.0:
   version "10.1.1"
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.1.1.tgz#fb541922a2e8fc618f5e6fbb474e281ed3d2a64c"
   integrity sha512-vEEgyk1fWVEnv7lPjkNedAIjzxQDue5Iw4FeX4UkNUDSVyD/jZTD0Bw2kAO7k6iyyJRAhM9oxxI0D1ET6k0Mmg==
@@ -6240,13 +6245,13 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-mathjs@^5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-5.9.0.tgz#e926feb1c67c2cae103512dd35ddc2573106e1e5"
-  integrity sha512-f1xmJklkTCr48y023cFy/ZSoVzOfgHp1gutvebi/Vv5RLly6j8G9T2/XHkfXewZKcwPDbhBkFEYljaCjudxulQ==
+mathjs@~6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-6.0.3.tgz#3d9e4a8ace012fa3c2078bb3ca1237374fa03136"
+  integrity sha512-BkXSjaWg0Dkwf6S3Cs7bLorei96ltYtCxNoTaLCZcH7OK+T+RgpobH86bTKD9oRI1hABXfuom/vf/RGI9CTfHA==
   dependencies:
     complex.js "2.0.11"
-    decimal.js "10.1.1"
+    decimal.js "10.2.0"
     escape-latex "1.2.0"
     fraction.js "4.0.12"
     javascript-natural-sort "0.7.1"
