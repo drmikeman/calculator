@@ -4,8 +4,13 @@
       v-card.pa-3
         v-container.grid-list-xs
           v-layout.row.wrap(v-for="(item, index) in expressions" :key="index")
-            v-flex.xs10
+            v-flex.xs2
+              v-text-field(v-model="item.name" solo)
+            v-flex.xs6
               v-text-field(v-model="item.expression" solo prefix="=" :error-messages="item.errors")
+            v-flex.xs2
+              v-sheet.align-center.justify-end.d-flex.pa-2(color="grey lighten-3" height="48" elevation="2").
+                {{ item.symbols }}
             v-flex.xs2
               v-sheet.align-center.justify-end.d-flex.pa-2(color="grey lighten-3" height="48" elevation="2").
                 {{ item.result }}
@@ -22,8 +27,8 @@ export default {
     return {
       expressions:
       [
-        new Item('2*3'),
-        new Item('5+8')
+        new Item('a', '2*3'),
+        new Item('b', '5+8')
       ]
     }
   },
