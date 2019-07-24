@@ -16,6 +16,22 @@
 
 <script>
 export default {
+  program: {
+    name: 'Power',
+    params: [
+      { name: 'a' },
+      { name: 'n' }
+    ],
+    steps: [
+      {
+        actions: [
+          { type: 'add_index', name: 'i', indexType: 'range', from: 0, step: 1, to: 'n' },
+          { type: 'add_column', name: 'Value', expressions: [1, '$*a'] }
+        ]
+      }
+    ],
+    result: '$Value'
+  },
   data() {
     return {
       name: 'Power',
