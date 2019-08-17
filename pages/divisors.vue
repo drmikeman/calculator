@@ -55,7 +55,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .function__header
   background-color: #558b2f
   color: white

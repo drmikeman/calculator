@@ -38,8 +38,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-// .v-navigation-drawer
-//   width: 150px !important
-</style>
