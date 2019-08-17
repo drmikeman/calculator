@@ -1,18 +1,63 @@
 <template lang="pug">
   v-layout.row
-    v-card.elevation-5
-      contenteditable.function__header(v-model="name" tag="div" :noNL="true")
-      v-layout.part.justify-center.row.pa-2
+    v-card.elevation-5.example
+      .function__header {{ name }}
+      v-layout.justify-center.row.pa-3
         .argument
           .argument__header {{ params[0].name }}
-          .argument__value {{ params[0].value }}
+          v-layout.column
+            .argument__value &nbsp;
+        .argument.ml-3
+          .argument__header {{ params[1].name }}
+          v-layout.row
+            .argument__value &nbsp;
+            .argument__value &nbsp;
+            .argument__value &nbsp;
+      v-layout.part.justify-center.row.pa-3(@click="showDialog()")
+        .column
+          .column_seq__header {{ columns[0].name }}
+          .column_seq__value(v-for="cell in columns[0].cells", :class="cell.color") &nbsp;
+        .column
+          .column__header {{ columns[1].name }}
+          .column__value =&thinsp;1
+          div(style="position: relative")
+            .column__value(style="border-bottom: 1px solid transparent") pierwsza kom
+            .column__value druga kom
+            div(style="position: absolute; background-color: blue; top: 0px; left: 0px; opacity: 0.9")
+              div =&thinsp;$*xxxxxxxxxxx
+              div =&thinsp;$*xxxxxxxxxxx
+        .column
+          .column__header {{ columns[2].name }}
+          .column__value(v-for="cell in columns[2].cells", :class="cell.color") {{ cell.value }}
+      .function__header(style="font-size: 1.2rem") result
+      v-layout.part.justify-center.row.pa-2.result {{ result }}
+      v-dialog(v-model="dialog")
+        v-flex.justify-center.row
+          v-card.elevation-5
+            v-layout.justify-center.row.pa-3
+              .column
+                .column_seq__header {{ columns[0].name }}
+                .column_seq__value(v-for="cell in columns[0].cells", :class="cell.color") {{ cell.value }}
+              .column
+                .column__header {{ columns[1].name }}
+                .column__value(v-for="cell in columns[1].cells", :class="cell.color") {{ cell.value }}
+              .column
+                .column__header {{ columns[2].name }}
+                .column__value(v-for="cell in columns[2].cells", :class="cell.color") {{ cell.value }}
+    v-card.elevation-5.example.example-background
+      .function__header.example-header Example 1
+      v-layout.justify-center.row.pa-3
         .argument
+          .argument__header {{ params[0].name }}
+          v-layout.column
+            .argument__value {{ params[0].value }}
+        .argument.ml-3
           .argument__header {{ params[1].name }}
           v-layout.row
             .argument__value {{ params[1].value[0] }}
             .argument__value {{ params[1].value[1] }}
             .argument__value {{ params[1].value[2] }}
-      v-layout.part.justify-center.row.pa-2
+      v-layout.part.justify-center.row.pa-3(@click="showDialog()")
         .column
           .column_seq__header {{ columns[0].name }}
           .column_seq__value(v-for="cell in columns[0].cells", :class="cell.color") {{ cell.value }}
@@ -22,7 +67,7 @@
         .column
           .column__header {{ columns[2].name }}
           .column__value(v-for="cell in columns[2].cells", :class="cell.color") {{ cell.value }}
-      .function__header result
+      .function__header.example-header(style="font-size: 1.2rem") result
       v-layout.part.justify-center.row.pa-2.result {{ result }}
 </template>
 
@@ -62,13 +107,25 @@ export default {
           ]
         }
       ],
-      result: 13
+      result: 13,
+      dialog: false
+    }
+  },
+  methods: {
+    showDialog: function () {
+      this.dialog = true
     }
   }
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
+.example:first-child
+  margin-right: 50px
+
+.border
+  border: 1px solid black
+
 .function__header
   background-color: #558b2f
   color: white
@@ -79,12 +136,11 @@ export default {
   text-align: center
 
 .part
-  border: 1px solid #a7a7a7
+  border-top: 1px solid #a7a7a7
 
 .argument
   font-size: 1.2rem
   text-align: center
-  margin: 5px
   min-width: 2.5rem
 
   &__header
@@ -100,16 +156,21 @@ export default {
     border: 1px solid #a7a7a7
     text-align: center
 
+  &__value:not(:first-child)
+    border-left: none
+
 .column
   font-size: 1.2rem
   text-align: center
-  margin: 5px -1px
   min-width: 2.5rem
+
+  &:not(:first-child) &__header
+    border-left: none
 
   &__header
     background-color: #e0e0e0
     color: black
-    padding: 0.1rem 0.5rem
+    padding: 0.3rem 0.5rem
     border: 1px solid #a7a7a7
     font-weight: bold
 
@@ -120,10 +181,13 @@ export default {
     border: 1px solid #a7a7a7
     text-align: center
 
+  &__value:not(:first-child)
+    border-left: none
+
   &_seq__header
     background-color: #616161
     color: white
-    padding: 0.1rem 0.5rem
+    padding: 0.3rem 0.5rem
     border: 1px dashed #a7a7a7
     font-weight: bold
 
@@ -142,6 +206,12 @@ export default {
 
 .pink-slot
   background-color: #ffcdd3
+
+.example-header
+  background-color: #7e5f01
+
+.example-background
+  background-color: #fff8e2
 
 .result
   font-size: 1.2rem
