@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 @require '~vuetify/src/stylus/app.styl'
 
 .function__header
