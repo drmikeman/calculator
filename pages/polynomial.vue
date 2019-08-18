@@ -1,74 +1,58 @@
 <template lang="pug">
   v-layout.row
-    v-card.elevation-5.example
+    v-card.elevation-5
       .function__header {{ name }}
-      v-layout.justify-center.row.pa-3
-        .argument
-          .argument__header {{ params[0].name }}
-          v-layout.column
-            .argument__value &nbsp;
-        .argument.ml-3
-          .argument__header {{ params[1].name }}
-          v-layout.row
-            .argument__value &nbsp;
-            .argument__value &nbsp;
-            .argument__value &nbsp;
-      v-layout.part.justify-center.row.pa-3(@click="showDialog()")
-        .column
-          .column_seq__header {{ columns[0].name }}
-          .column_seq__value(v-for="cell in columns[0].cells", :class="cell.color") &nbsp;
-        .column
-          .column__header {{ columns[1].name }}
-          .column__value =&thinsp;1
-          div(style="position: relative")
-            .column__value(style="border-bottom: 1px solid transparent") pierwsza kom
-            .column__value druga kom
-            div(style="position: absolute; background-color: blue; top: 0px; left: 0px; opacity: 0.9")
-              div =&thinsp;$*xxxxxxxxxxx
-              div =&thinsp;$*xxxxxxxxxxx
-        .column
-          .column__header {{ columns[2].name }}
-          .column__value(v-for="cell in columns[2].cells", :class="cell.color") {{ cell.value }}
-      .function__header(style="font-size: 1.2rem") result
-      v-layout.part.justify-center.row.pa-2.result {{ result }}
-      v-dialog(v-model="dialog")
-        v-flex.justify-center.row
-          v-card.elevation-5
-            v-layout.justify-center.row.pa-3
-              .column
-                .column_seq__header {{ columns[0].name }}
-                .column_seq__value(v-for="cell in columns[0].cells", :class="cell.color") {{ cell.value }}
-              .column
-                .column__header {{ columns[1].name }}
-                .column__value(v-for="cell in columns[1].cells", :class="cell.color") {{ cell.value }}
-              .column
-                .column__header {{ columns[2].name }}
-                .column__value(v-for="cell in columns[2].cells", :class="cell.color") {{ cell.value }}
-    v-card.elevation-5.example.example-background
-      .function__header.example-header Example 1
-      v-layout.justify-center.row.pa-3
-        .argument
-          .argument__header {{ params[0].name }}
-          v-layout.column
-            .argument__value {{ params[0].value }}
-        .argument.ml-3
-          .argument__header {{ params[1].name }}
-          v-layout.row
-            .argument__value {{ params[1].value[0] }}
-            .argument__value {{ params[1].value[1] }}
-            .argument__value {{ params[1].value[2] }}
-      v-layout.part.justify-center.row.pa-3(@click="showDialog()")
-        .column
-          .column_seq__header {{ columns[0].name }}
-          .column_seq__value(v-for="cell in columns[0].cells", :class="cell.color") {{ cell.value }}
-        .column
-          .column__header {{ columns[1].name }}
-          .column__value(v-for="cell in columns[1].cells", :class="cell.color") {{ cell.value }}
-        .column
-          .column__header {{ columns[2].name }}
-          .column__value(v-for="cell in columns[2].cells", :class="cell.color") {{ cell.value }}
-      .function__header.example-header(style="font-size: 1.2rem") result
-      v-layout.part.justify-center.row.pa-2.result {{ result }}
+      v-layout.row.justify-center.pa-3
+        table.argument(v-for="argument in params")
+          template(v-if="argument.type === 'sequence'")
+            tr
+              th(:colspan="argument.values.length") {{ argument.name }}
+            tr
+              td(v-for="value in argument.values") &nbsp;
+          template(v-else)
+            tr
+              th {{ argument.name }}
+            tr
+              td &nbsp;
+      v-layout.part.row.justify-center.pa-3
+        table.board
+          tr
+            th(v-for="column in columns" :class="column.class") {{ column.name }}
+          tr(v-for="(_, i) in columns[0].cells")
+            template(v-for="column in columns")
+              td(
+                v-if="!column.cells[i].skip"
+                :rowspan="column.cells[i].span"
+                :class="[column.class, column.cells[i].color]"
+              )
+                span(v-if="column.cells[i].expression") =&thinsp;{{ column.cells[i].expression }}
+                span(v-else) &nbsp;
+      .function__footer result
+      .result =&thinsp;{{ result.expression }}
+
+    v-card.example.elevation-5
+      .function__header Example
+      v-layout.row.justify-center.pa-3
+        table.argument(v-for="argument in params")
+          template(v-if="argument.type === 'sequence'")
+            tr
+              th(:colspan="argument.values.length") {{ argument.name }}
+            tr
+              td(v-for="value in argument.values") {{ value }}
+          template(v-else)
+            tr
+              th {{ argument.name }}
+            tr
+              td {{ argument.value }}
+      v-layout.part.row.justify-center.pa-3
+        table.board
+          tr
+            th(v-for="column in columns" :class="column.class") {{ column.name }}
+          tr(v-for="(_, i) in columns[0].cells")
+            template(v-for="column in columns")
+              td(:class="[column.class, column.cells[i].color]") {{ column.cells[i].value }}
+      .function__footer result
+      .result {{ result.value }}
 </template>
 
 <script>
@@ -78,12 +62,14 @@ export default {
     return {
       name: 'Polynomial',
       params: [
-        { name: 'x', value: 1 },
-        { name: 'a', value: [2, 5, 6] }
+        { name: 'x', type: 'value', value: 1 },
+        { name: 'a', type: 'sequence', values: [2, 5, 6] }
       ],
+      rows: 3,
       columns: [
         {
           name: 'a',
+          class: 'shadow-column',
           cells: [
             { value: 2, color: 'index-slot' },
             { value: 5, color: 'index-slot' },
@@ -92,111 +78,118 @@ export default {
         },
         {
           name: 'Power',
+          class: 'standard-column',
           cells: [
-            { value: 1 },
-            { value: 1, color: 'blue-slot' },
-            { value: 1, color: 'blue-slot' }
+            { value: 1, expression: '1' },
+            { value: 1, color: 'blue-slot', expression: '$*x', span: 2 },
+            { value: 1, color: 'blue-slot', skip: true }
           ]
         },
         {
           name: 'Element',
+          class: 'standard-column',
           cells: [
-            { value: 2 },
-            { value: 5, color: 'pink-slot' },
-            { value: 6, color: 'pink-slot' }
+            { value: 2, expression: 'First(a)' },
+            { value: 5, color: 'pink-slot', expression: 'a*Power', span: 2 },
+            { value: 6, color: 'pink-slot', skip: true }
           ]
         }
       ],
-      result: 13,
-      dialog: false
-    }
-  },
-  methods: {
-    showDialog: function () {
-      this.dialog = true
+      result: {
+        expression: 'Sum(Element)',
+        value: 13
+      }
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.example:first-child
-  margin-right: 50px
-
-.border
-  border: 1px solid black
+@require '~vuetify/src/stylus/app.styl'
 
 .function__header
   background-color: #558b2f
+  border: 1px solid black
   color: white
   font-size: 1.5rem
   font-weight: 600
-  padding: 0.25rem 0.5rem
-  border: 1px solid black
+  padding: 0.3rem 0.5rem
   text-align: center
+
+.function__footer
+  background-color: #558b2f
+  border: 1px solid black
+  color: white
+  font-size: 1.2rem
+  font-weight: 600
+  padding: 0.3rem 0.5rem
+  text-align: center
+
+.argument
+  border-collapse: collapse
+  font-size: 1.2rem
+  text-align: center
+  margin-right: 1rem
+
+  &:last-child
+    margin: 0rem
+
+  th
+    background-color: #616161
+    border: 1px solid black
+    color: white
+    font-weight: bold
+    padding: 0.3rem 0.5rem
+
+  td
+    background-color: white
+    border: 1px solid #a7a7a7
+    min-width: 2.5rem
+    padding: 0.3rem 0.5rem
+
+.board
+  background-color: white
+  border-collapse: collapse
+  text-align: center
+  margin-right: 1rem
+
+  &:last-child
+    margin: 0rem
+
+  th
+    font-size: 1.2rem
+    font-weight: bold
+    padding: 0.3rem 0.5rem
+
+    &.standard-column
+      background-color: #e0e0e0
+      border: 1px solid #a7a7a7
+      color: black
+
+    &.shadow-column
+      background-color: #616161
+      border: 1px dashed #a7a7a7
+      color: white
+
+  td
+    padding: 0.3rem 0.5rem
+    border: 1px solid #a7a7a7
+    min-width: 2.5rem
+    padding: 0.3rem 0.5rem
+
+    &.standard-column
+      border: 1px solid #a7a7a7
+
+    &.shadow-column
+      border: 1px dashed #a7a7a7
 
 .part
   border-top: 1px solid #a7a7a7
 
-.argument
+.result
   font-size: 1.2rem
+  padding: 0.7rem 0.5rem
   text-align: center
-  min-width: 2.5rem
-
-  &__header
-    background-color: #616161
-    color: white
-    padding: 0.1rem 0.5rem
-    border: 1px solid black
-    font-weight: bold
-
-  &__value
-    background-color: white
-    padding: 0.25rem 0.5rem
-    border: 1px solid #a7a7a7
-    text-align: center
-
-  &__value:not(:first-child)
-    border-left: none
-
-.column
-  font-size: 1.2rem
-  text-align: center
-  min-width: 2.5rem
-
-  &:not(:first-child) &__header
-    border-left: none
-
-  &__header
-    background-color: #e0e0e0
-    color: black
-    padding: 0.3rem 0.5rem
-    border: 1px solid #a7a7a7
-    font-weight: bold
-
-  &__value
-    margin-top: -1px
-    background-color: white
-    padding: 0.25rem 0.5rem
-    border: 1px solid #a7a7a7
-    text-align: center
-
-  &__value:not(:first-child)
-    border-left: none
-
-  &_seq__header
-    background-color: #616161
-    color: white
-    padding: 0.3rem 0.5rem
-    border: 1px dashed #a7a7a7
-    font-weight: bold
-
-  &_seq__value
-    margin-top: -1px
-    background-color: white
-    padding: 0.25rem 0.5rem
-    border: 1px dashed #a7a7a7
-    text-align: center
 
 .index-slot
   background-color: #ffe172
@@ -207,12 +200,13 @@ export default {
 .pink-slot
   background-color: #ffcdd3
 
-.example-header
-  background-color: #7e5f01
+.example
+  margin-left: 50px
+  background-color: #fff8e2 !important
 
-.example-background
-  background-color: #fff8e2
+  .function__header
+    background-color: #7e5f01
 
-.result
-  font-size: 1.2rem
+  .function__footer
+    background-color: #7e5f01
 </style>
