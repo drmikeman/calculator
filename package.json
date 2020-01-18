@@ -1,7 +1,7 @@
 {
-  "name": "Calculator",
+  "name": "bp-sandbox",
   "version": "1.0.0",
-  "description": "Expression calculator for Board Programming",
+  "description": "Sandbox for Board Programming",
   "author": "Michał Maćkowiak",
   "private": true,
   "scripts": {

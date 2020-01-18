@@ -5,6 +5,9 @@
     </v-toolbar>
 
     <v-navigation-drawer app permanent width="120">
+      <v-subheader>
+        Functions
+      </v-subheader>
       <v-list>
         <v-list-tile v-for="program in programs" :key="program.title" :to="program.link" nuxt>
           <v-list-tile-content>
@@ -12,8 +15,8 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <v-divider inset />
-      <v-subheader inset>
+      <v-divider />
+      <v-subheader>
         Other
       </v-subheader>
       <v-list>
@@ -37,7 +40,7 @@
 export default {
   data() {
     return {
-      title: 'Calculator for Board Programming',
+      title: 'Sandbox for Board Programming',
       programs: [
         { title: 'Power', link: '/power' },
         { title: 'Fibonacci', link: '/fibo' },

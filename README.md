@@ -1,6 +1,6 @@
-# calculator
+# bp-sandbox
 
-> Expression calculator for Board Programming
+> Sandbox for Board Programming
 
 ## Build Setup
 
