@@ -35,7 +35,6 @@ export default {
       ],
       others: [
         { title: 'LaTeX', link: '/latex' },
-        { title: 'Calculator', link: '/calc' },
         { title: 'Sandbox', link: '/sandbox' }
       ]
     }
