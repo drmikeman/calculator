@@ -1,39 +1,24 @@
-<template>
-  <v-app>
-    <v-toolbar fixed app>
-      <v-toolbar-title v-text="title" />
-    </v-toolbar>
+<template lang="pug">
+  v-app
+    v-toolbar(fixed app)
+      v-toolbar-title(v-text="title")
 
-    <v-navigation-drawer app permanent width="120">
-      <v-subheader>
-        Functions
-      </v-subheader>
-      <v-list>
-        <v-list-tile v-for="program in programs" :key="program.title" :to="program.link" nuxt>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ program.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-      <v-divider />
-      <v-subheader>
-        Other
-      </v-subheader>
-      <v-list>
-        <v-list-tile v-for="other in others" :key="other.title" :to="other.link" nuxt>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ other.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
+    v-navigation-drawer(app permanent width="120")
+      v-subheader Functions
+      v-list
+        v-list-tile(v-for="program in programs" :key="program.title" :to="program.link" nuxt)
+          v-list-tile-content
+            v-list-tile-title {{ program.title }}
+      v-divider
+      v-subheader Other
+      v-list
+        v-list-tile(v-for="other in others" :key="other.title" :to="other.link" nuxt)
+          v-list-tile-content
+            v-list-tile-title {{ other.title }}
 
-    <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
-    </v-content>
-  </v-app>
+    v-content
+      v-container
+        nuxt
 </template>
 
 <script>
