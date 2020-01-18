@@ -6,9 +6,20 @@
 
     <v-navigation-drawer app permanent width="120">
       <v-list>
-        <v-list-tile v-for="item in items" :key="item.title" :to="item.link" nuxt>
+        <v-list-tile v-for="program in programs" :key="program.title" :to="program.link" nuxt>
           <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title>{{ program.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+      <v-divider inset />
+      <v-subheader inset>
+        Other
+      </v-subheader>
+      <v-list>
+        <v-list-tile v-for="other in others" :key="other.title" :to="other.link" nuxt>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ other.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -27,12 +38,17 @@ export default {
   data() {
     return {
       title: 'Calculator for Board Programming',
-      items: [
+      programs: [
         { title: 'Power', link: '/power' },
         { title: 'Fibonacci', link: '/fibo' },
         { title: 'Polynomial', link: '/polynomial' },
         { title: 'Divisors', link: '/divisors' },
         { title: 'Holding', link: '/holding' }
+      ],
+      others: [
+        { title: 'LaTeX', link: '/latex' },
+        { title: 'Calculator', link: '/calc' },
+        { title: 'Sandbox', link: '/sandbox' }
       ]
     }
   }
